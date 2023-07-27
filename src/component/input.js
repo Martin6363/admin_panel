@@ -5,14 +5,26 @@ export function Input({ AddData }) {
     const [name, setName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
+    const [isEmailValid, setIsEmailValid] = useState(true);
+    const [isEmailChecked, setIsEmailChecked] = useState(false);
 
-    function handleAddData () {
-        if ((name.trim() && lastName.trim() && email.trim()) !== "") {
-          AddData(name, lastName, email)
-          setName("")
-          setLastName("")
-          setEmail("")
-        }
+    function emailValidation (e) {
+      const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const emailValue = e.target.value;
+      setEmail(emailValue);
+      setIsEmailChecked(true)
+      setIsEmailValid(regEx.test(emailValue));
+    }
+
+    function handleAddData() {
+      const isInputValid = ((name.trim() && lastName.trim() && email.trim()) !== "");
+      if (isEmailValid && isInputValid) {
+        AddData(name, lastName, email);
+        setName("");
+        setLastName("");
+        setEmail("");
+        setIsEmailChecked(true);
+      }
     }
 
     const handleKeyPress = (e) => {
@@ -26,6 +38,7 @@ export function Input({ AddData }) {
       <input
         type='text'
         name="name"
+        className={name.length !== 0 ? "email-success" : ""}
         placeholder="Enter Name"
         value={name}
         onKeyPress={handleKeyPress}
@@ -36,6 +49,7 @@ export function Input({ AddData }) {
       <input 
         type='text'
         name="lastName"
+        className={lastName.length !== 0 ? "email-success" : ""}
         placeholder="Enter LastName"
         value={lastName}
         onKeyPress={handleKeyPress}
@@ -46,14 +60,13 @@ export function Input({ AddData }) {
       <input
         type='text'
         name="email"
+        className={email.length === 0 ? "" : (isEmailChecked ? (isEmailValid ? "email-success" : "email-error") : "")}
         placeholder="Enter Email"
         value={email}
         onKeyPress={handleKeyPress}
-        onChange={(e) => {
-            setEmail(e.target.value);
-        }}
+        onChange={emailValidation}
       />
-      <button className='add-button' onClick={handleAddData}>Add</button>
+      <button className='button add-button' onClick={handleAddData}>Add</button>
     </div>
   )
 }

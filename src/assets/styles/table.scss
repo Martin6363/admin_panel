@@ -17,7 +17,6 @@
     height: 350px;
     overflow-y: scroll;
     padding-right: 2px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.071) 0%,rgba(255,255,255,0) 5%);
 }
 
 .userData-cont::-webkit-scrollbar {
@@ -36,6 +35,7 @@
 .table {
     width: 100%;
     border-collapse: collapse;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.071) 0%,rgba(255,255,255,0) 5%);
 }
 
 .thead-tr, .thead-tr th {
@@ -79,7 +79,7 @@
     @include button-style(#25A3B8, #156d80);
 }
 
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
     .table-button {
         flex-direction: column;
         gap: 5px;

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Button } from '../component/button'
 import { EditInput } from '../component/editInput'
 import '../assets/styles/table.scss'
 

@@ -10,21 +10,69 @@
     width: 100%;
     padding: 10px 20px;
     font-size: 15px;
+    outline: none;
 }
 
-.add-button {
-    padding: 10px 20px;
-    width: 50%;
-    cursor: pointer;
-    background-color: #25A3B8;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    color: #f2f2f2;
-    font-size: 18px;
-    transition: background-color 0.2s;
+.button {
+  position: relative;
+  padding: 10px 20px;
+  width: 50%;
+  border: none;
+  background-color: #25A3B8;
+  cursor: pointer;
+  outline: none;
+  font-size: 18px;
+  margin: 1em 0.8em;
+  color: #f2f2f2;
+  border-radius: 2px;
+  transition: background-color 0.2s;
 }
 
-.add-button:hover {
-    background-color: #156d80;
-    color: #fff;
+.button:hover {
+    background-color: #4db5c7;
+}
+
+.add-button::after,
+.add-button::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 20%;
+  height: 20%;
+  border: 3px solid;
+  transition: all 0.6s ease;
+  border-radius: 2px;
+}
+
+.add-button::after {
+  bottom: 0;
+  right: 0;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-bottom-color:  #566473;
+  border-right-color: #566473;
+}
+
+.add-button::before {
+  top: 0;
+  left: 0;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+  border-top-color: #566473;
+  border-left-color: #566473;
+}
+
+.add-button:hover:after,
+.add-button:hover:before {
+  width: 100%;
+  height: 100%;
+}
+
+
+.email-error {
+    border: 2px solid #ff3333;
+}
+
+.email-success {
+    border: 2px solid #4BB543;
 }
