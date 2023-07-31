@@ -1,5 +1,5 @@
 import '../assets/styles/input.scss'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 export function Input({ AddData }) {
     const [name, setName] = useState("");
@@ -7,6 +7,10 @@ export function Input({ AddData }) {
     const [email, setEmail] = useState("");
     const [isEmailValid, setIsEmailValid] = useState(true);
     const [isEmailChecked, setIsEmailChecked] = useState(false);
+    const nameInputRef = useRef('');
+    const lastNameInputRef = useRef('');
+    const emailInputRef = useRef('');
+
 
     function emailValidation (e) {
       const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -24,7 +28,13 @@ export function Input({ AddData }) {
         setLastName("");
         setEmail("");
         setIsEmailChecked(true);
-      }
+      } else if (name.trim() === "") {
+          nameInputRef.current.focus();
+        } else if (lastName.trim() === "") {
+          lastNameInputRef.current.focus();
+        } else if (email.trim() === "") {
+          emailInputRef.current.focus();
+        }
     }
 
     const handleKeyPress = (e) => {
@@ -45,6 +55,7 @@ export function Input({ AddData }) {
         onChange={(e) => {
             setName(e.target.value);
         }}
+        ref={nameInputRef}
       />
       <input 
         type='text'
@@ -56,6 +67,7 @@ export function Input({ AddData }) {
         onChange={(e) => {
             setLastName(e.target.value);
         }}
+        ref={lastNameInputRef}
       />
       <input
         type='text'
@@ -65,6 +77,7 @@ export function Input({ AddData }) {
         value={email}
         onKeyPress={handleKeyPress}
         onChange={emailValidation}
+        ref={emailInputRef}
       />
       <button className='button add-button' onClick={handleAddData}>Add</button>
     </div>

@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { UserData } from './pages/userData';
 import { Input } from './component/input';
 
@@ -40,7 +40,7 @@ function App() {
               name: name,
               lastName: lastName,
               email: email,
-              id: data?.length + 1
+              id: Math.random()
             }
           ])
         }}/>

@@ -11,6 +11,14 @@
     padding: 10px 20px;
     font-size: 15px;
     outline: none;
+    margin-right: 5px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.input-cont input:focus {
+  border-bottom: 2px solid #25A3B8;
 }
 
 .button {
@@ -40,7 +48,7 @@
   width: 20%;
   height: 20%;
   border: 3px solid;
-  transition: all 0.6s ease;
+  transition: all 0.2s ease;
   border-radius: 2px;
 }
 
@@ -69,9 +77,17 @@
 }
 
 .email-error {
-    border: 2px solid #ff3333;
+  outline: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid #ff3333;
 }
 
 .email-success {
-    border: 2px solid #4BB543;
+  outline: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid #4BB543;
 }

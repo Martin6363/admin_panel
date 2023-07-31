@@ -66,6 +66,23 @@
 }
 
 
+.View-container {
+    width: 100%;
+    z-index: 2;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    transform: translateY(100%);
+}
+  
+.view-transformed {
+    position: fixed;
+    left: 0;
+    top: 0; 
+    transform: translateY(76%);
+    transition: transform 0.3s ease;
+}
+
 .delete-btn {
     @include button-style(#DC3545, #a51922);
     margin: 0 6px;
