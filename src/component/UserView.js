@@ -6,21 +6,22 @@ import '../assets/styles/userView.scss'
 
 
 export function UserView({ userData, onClose}) {
+  const {name, lastName, email} = userData;
   return (
     <div className='user-view-container'>
         <h2>User Details</h2>
         <div className='details-cont'>
             <div className='details-text'>
               <b>Name:</b>
-              <p>{userData.name}</p>
+              <p>{name}</p>
             </div>
             <div className='details-text'>
               <b>Last Name:</b>
-              <p>{userData.lastName}</p>
+              <p>{lastName}</p>
             </div>
             <div className='details-text'>
               <b>Email:</b> 
-              <p>{userData.email}</p>
+              <p>{email}</p>
             </div>
             <button className='close-button' onClick={onClose}>
               <FontAwesomeIcon icon={faTimesCircle} />

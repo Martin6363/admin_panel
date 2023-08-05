@@ -1,5 +1,6 @@
 import '../assets/styles/input.scss'
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
+import { useForm } from "react-hook-form"
 
 export function Input({ AddData }) {
     const [name, setName] = useState("");
@@ -7,11 +8,9 @@ export function Input({ AddData }) {
     const [email, setEmail] = useState("");
     const [isEmailValid, setIsEmailValid] = useState(true);
     const [isEmailChecked, setIsEmailChecked] = useState(false);
-    const nameInputRef = useRef('');
-    const lastNameInputRef = useRef('');
-    const emailInputRef = useRef('');
+    const { register, handleSubmit, formState: {errors} } = useForm();
 
-
+    console.log(errors)
     function emailValidation (e) {
       const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       const emailValue = e.target.value;
@@ -20,7 +19,8 @@ export function Input({ AddData }) {
       setIsEmailValid(regEx.test(emailValue));
     }
 
-    function handleAddData() {
+    function handleAddData(e) {
+      e.preventDefault()
       const isInputValid = ((name.trim() && lastName.trim() && email.trim()) !== "");
       if (isEmailValid && isInputValid) {
         AddData(name, lastName, email);
@@ -28,34 +28,25 @@ export function Input({ AddData }) {
         setLastName("");
         setEmail("");
         setIsEmailChecked(true);
-      } else if (name.trim() === "") {
-          nameInputRef.current.focus();
-        } else if (lastName.trim() === "") {
-          lastNameInputRef.current.focus();
-        } else if (email.trim() === "") {
-          emailInputRef.current.focus();
-        }
+      }
     }
 
-    const handleKeyPress = (e) => {
-      if (e.key === 'Enter') {
-        handleAddData()
-      }
-    };
+    const onSubmit = (data) => {
+      console.log(data);
+    }
 
   return (
-    <div className='input-cont'>
+    <form className='input-cont' onSubmit={handleSubmit(onSubmit)}>
       <input
         type='text'
         name="name"
         className={name.length !== 0 ? "email-success" : ""}
         placeholder="Enter Name"
         value={name}
-        onKeyPress={handleKeyPress}
         onChange={(e) => {
             setName(e.target.value);
         }}
-        ref={nameInputRef}
+        {...register({required: "Name is required"})}
       />
       <input 
         type='text'
@@ -63,11 +54,10 @@ export function Input({ AddData }) {
         className={lastName.length !== 0 ? "email-success" : ""}
         placeholder="Enter LastName"
         value={lastName}
-        onKeyPress={handleKeyPress}
         onChange={(e) => {
             setLastName(e.target.value);
         }}
-        ref={lastNameInputRef}
+        {...register({required: "LastName is required"})}
       />
       <input
         type='text'
@@ -75,11 +65,10 @@ export function Input({ AddData }) {
         className={email.length === 0 ? "" : (isEmailChecked ? (isEmailValid ? "email-success" : "email-error") : "")}
         placeholder="Enter Email"
         value={email}
-        onKeyPress={handleKeyPress}
         onChange={emailValidation}
-        ref={emailInputRef}
+        {...register({required: "Email is required"})}
       />
       <button className='button add-button' onClick={handleAddData}>Add</button>
-    </div>
+    </form>
   )
 }
