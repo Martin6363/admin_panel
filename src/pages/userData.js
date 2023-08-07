@@ -10,7 +10,6 @@ import { Link, Route, Routes } from 'react-router-dom';
 export function UserData({ List, SetList, onDelete }) {
     const [updateState, setUpdateState] = useState(-1)
     const [list, setList] = useState(List);
-    // const [selectedUser, setSelectedUser] = useState(false);
 
     const handleUpdate = (index) => {
         setUpdateState(index);
