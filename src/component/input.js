@@ -3,72 +3,66 @@ import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
 
 export function Input({ AddData }) {
-    const [name, setName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [isEmailValid, setIsEmailValid] = useState(true);
-    const [isEmailChecked, setIsEmailChecked] = useState(false);
-    const { register, handleSubmit, formState: {errors} } = useForm();
-
-    console.log(errors)
-    function emailValidation (e) {
-      const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      const emailValue = e.target.value;
-      setEmail(emailValue);
-      setIsEmailChecked(true)
-      setIsEmailValid(regEx.test(emailValue));
-    }
-
-    function handleAddData(e) {
-      e.preventDefault()
-      const isInputValid = ((name.trim() && lastName.trim() && email.trim()) !== "");
-      if (isEmailValid && isInputValid) {
-        AddData(name, lastName, email);
-        setName("");
-        setLastName("");
-        setEmail("");
-        setIsEmailChecked(true);
-      }
-    }
+    const { register, handleSubmit, formState: {errors}, reset } = useForm();
 
     const onSubmit = (data) => {
-      console.log(data);
+      if (data.name && data.lastName && data.email) {
+        AddData(data.name, data.lastName, data.email);
+        reset();
+      }
     }
 
   return (
     <form className='input-cont' onSubmit={handleSubmit(onSubmit)}>
-      <input
-        type='text'
-        name="name"
-        className={name.length !== 0 ? "email-success" : ""}
-        placeholder="Enter Name"
-        value={name}
-        onChange={(e) => {
-            setName(e.target.value);
-        }}
-        {...register({required: "Name is required"})}
-      />
-      <input 
-        type='text'
-        name="lastName"
-        className={lastName.length !== 0 ? "email-success" : ""}
-        placeholder="Enter LastName"
-        value={lastName}
-        onChange={(e) => {
-            setLastName(e.target.value);
-        }}
-        {...register({required: "LastName is required"})}
-      />
-      <input
-        type='text'
-        name="email"
-        className={email.length === 0 ? "" : (isEmailChecked ? (isEmailValid ? "email-success" : "email-error") : "")}
-        placeholder="Enter Email"
-        value={email}
-        onChange={emailValidation}
-        {...register({required: "Email is required"})}
-      />
-      <button className='button add-button' onClick={handleAddData}>Add</button>
+      <div className='input-box'>
+        <input
+          className={`${errors.name && "invalid"}`}
+          type='text'
+          name="name"
+          placeholder="Enter Name"
+          {...register("name", {
+            required: "Name is required",
+            pattern: {
+              value: /^(?! +$).*$/,
+              message: "Name must not be empty",
+            },
+          })}
+        />
+        {errors.name && <small>{errors.name.message}</small>}
+      </div>
+      <div className='input-box'>
+        <input 
+          className={`${errors.lastName && "invalid"}`}
+          type='text'
+          name="lastName"
+          placeholder="Enter LastName"
+          {...register("lastName", {
+            required: "LastName is required",
+            pattern: {
+              value: /^(?! +$).*$/,
+              message: "Last Name must not be empty",
+            },
+          })}
+        />
+        {errors.lastName && <small>{errors.lastName.message}</small>}
+      </div>
+      <div className='input-box'>
+        <input 
+          className={`${errors.email && "invalid"}`}
+          type='text'
+          name="email"
+          placeholder="Enter Email"
+          {...register('email', {
+            required: 'Email is required',
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: 'Invalid email format',
+            },
+          })}
+        />
+        {errors.email && (<small>{errors.email.message}</small>)}
+      </div>
+      <button className='button add-button' onClick={onSubmit}>Add</button>
     </form>
   )
 }

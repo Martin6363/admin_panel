@@ -3,74 +3,76 @@ import { EditInput } from '../component/editInput'
 import '../assets/styles/table.scss'
 import { UserView } from '../component/UserView';
 import PropTypes from 'prop-types';
+import { Input } from '../component/input';
+import { Link, Route, Routes } from 'react-router-dom';
 
-export function UserData({List, onDelete}) {
+
+export function UserData({ List, SetList, onDelete }) {
     const [updateState, setUpdateState] = useState(-1)
     const [list, setList] = useState(List);
-    const [selectedUser, setSelectedUser] = useState(false);
-    const [isViewTransform, setViewTransform] = useState(false);
+    // const [selectedUser, setSelectedUser] = useState(false);
 
     const handleUpdate = (index) => {
         setUpdateState(index);
     };
-
-    const handleView = (userData) => {
-        setSelectedUser(userData);
-        setViewTransform(true);
-    }
-
-    const handleViewClose = () => {
-        setSelectedUser(!selectedUser);
-        setViewTransform(false);
-    };
 return (
-    <div className='userData-cont'>
-        <table className='table'>
-            <thead className='thead'>
-                <tr className='thead-tr'>
-                    <th>Employee First Name</th>
-                    <th>Employee Last Name</th>
-                    <th>Employee Email Id</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody className='tbody'>
-                {
-                    List.map((elem, i) => (
-                        <tr key={elem.id} className='tbody-tr'>
-                            <td>{elem.name}</td>
-                            <td>{elem.lastName}</td>
-                            <td>{elem.email}</td>
-                            <td className='table-button'>
-                                <button className='edit-btn' onClick={() => handleUpdate(i)}>
-                                    Update
-                                </button>
-                                <button className='delete-btn' onClick={() => onDelete(elem)}>
-                                    Delete
-                                </button>
-                                <button className='view-btn' onClick={() => handleView(elem)}>
-                                    View
-                                </button>
-                            </td>
-                        </tr>
-                    ))
-                }
-            </tbody>
-        </table>
-        {
-            updateState !== -1 && (
-                <EditInput current={list[updateState]} setList={setList} setEditingIndex={setUpdateState} />
-            )
-        }
-      <div className={`View-container ${isViewTransform ? 'view-transformed' : ''}`}>
-        {
-            selectedUser && <UserView
-                userData={selectedUser}
-                onClose={handleViewClose}
-            />
-        }
-      </div>
-    </div>
+    <>
+        <Input AddData={(name, lastName, email) => {
+          SetList([
+              ...List,
+              {
+                  name: name,
+                  lastName: lastName,
+                  email: email,
+                  id: Math.random()
+              },
+          ]);
+      }} />
+        <div className='userData-cont'>
+            <table className='table'>
+                <thead className='thead'>
+                    <tr className='thead-tr'>
+                        <th>Employee First Name</th>
+                        <th>Employee Last Name</th>
+                        <th>Employee Email Id</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody className='tbody'>
+                    {
+                        List.map((elem, i) => (
+                            <tr key={elem.id} className='tbody-tr'>
+                                <td>{elem.name}</td>
+                                <td>{elem.lastName}</td>
+                                <td>{elem.email}</td>
+                                <td className='table-button'>
+                                    <button className='edit-btn' onClick={() => handleUpdate(i)}>
+                                        Update
+                                    </button>
+                                    <button className='delete-btn' onClick={() => onDelete(elem)}>
+                                        Delete
+                                    </button>
+                                    <Link to={`/UserView/${elem.id}`} className='view-btn'>
+                                        View
+                                    </Link>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+            {
+                updateState !== -1 && (
+                    <EditInput current={list[updateState]} setList={setList} setEditingIndex={setUpdateState} />
+                )
+            }
+        <div className='View-container'>
+            {
+                <UserView List={list}/>
+            }
+        </div>
+        </div>
+    </>
   )
 }
 

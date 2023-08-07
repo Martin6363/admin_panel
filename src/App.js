@@ -1,55 +1,61 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserData } from './pages/userData';
-import { Input } from './component/input';
+import { TailSpin } from 'react-loader-spinner'
+import { LoginInput } from './pages/loginInput';
+import { Route, Routes } from 'react-router';
+import { dataList } from './component/dataList'; 
+import { UserView } from './component/UserView';
+import { NavigationHeader } from './pages/navigationHeader';
+
 
 function App() {
-  const [data, setData] = useState([
-    {
-      name: 'Ramesh',
-      lastName: 'Fadatare',
-      email: 'ram@gmail.com',
-      id: Math.random() 
-    },
-    {
-      name: 'John',
-      lastName: 'Cena',
-      email: 'jon@gmail.com',
-      id: Math.random() 
-    },
-    {
-      name: 'Tom',
-      lastName: 'Crusie',
-      email: 'tom@gmail.com',
-      id: Math.random() 
-    },
-    {
-      name: 'Admin',
-      lastName: 'Admin',
-      email: 'admin@gmail.com',
-      id: Math.random() 
-    },
-  ])
+  const [list, setList] = useState(dataList);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }, [])
+
+  if (isLoading) {
+    return (
+      <div className="loading-cont">
+        <TailSpin
+          height="80"
+          width="80"
+          color="#25A3B8"
+          ariaLabel="tail-spin-loading"
+          radius="1"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+        <h2>Loading...</h2>
+      </div>
+    )
+  }
   return (
     <div className="App">
       <div className='Wrapper'>
-        <Input AddData={(name, lastName, email) => {
-          setData([
-            ...data,
-            {
-              name: name,
-              lastName: lastName,
-              email: email,
-              id: Math.random()
-            }
-          ])
-        }}/>
-        <UserData 
-          List={data}
-          onDelete={(userData) => {
-            setData(data.filter((elem) => elem.id !== userData.id));
-          }}
-        />
+      <NavigationHeader/>
+        <Routes>
+          <Route path="/" element={<LoginInput/>}/>
+          <Route path='/userData' element={
+            <UserData 
+              List={list}
+              SetList={setList}
+              onDelete={(userData) => {
+                setList(list.filter((elem) => elem.id !== userData.id));
+              }}
+            />
+          }/>
+          <Route path='/UserView/:id/' element={<UserView List={list}/>}/>
+          <Route path='/navigationHeader' element={<NavigationHeader/>}/>       
+          <Route path='/loginInput' element={<LoginInput/>}/> 
+          <Route path='*' element={<h1>404</h1>}/>
+        </Routes>
       </div>
     </div>
   );

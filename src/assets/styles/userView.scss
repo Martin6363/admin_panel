@@ -74,3 +74,15 @@
     opacity: 0.7;
 }
 
+.not-found-box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.not-found-box strong {
+    font-size: 25px;
+    color: #888;
+}

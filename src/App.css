@@ -13,6 +13,32 @@
     background-color: #f2f2f2;
 }
 
+/* body {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
 .Wrapper {
     width: 80%;
+}
+
+.loading-cont {
+    background-color: #f2f2f2;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.loading-cont h2 {
+    width: 100%;
+    font-size: 16px;
+    font-family: sans-serif;
+    text-align: center;
 }

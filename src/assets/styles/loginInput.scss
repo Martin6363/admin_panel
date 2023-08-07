@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.signin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background: #e2e2e2;  
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  border-radius: 4px;
+  box-shadow: 0 15px 35px rgba(0,0,0, 0.3);
+}
+
+.signin .content {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.signin .content h2 {
+  font-size: 2em;
+  color: #25A3B8;
+  text-transform: uppercase;
+}
+
+.signin .content .form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.signin .content .form .inputBox {
+  position: relative;
+  width: 100%;
+}
+
+.signin .content .form .inputBox input {
+  position: relative;
+  width: 100%;
+  background: #f2f2f2;
+  border: none;
+  outline: none;
+  padding: 25px 10px 7.5px;
+  border-radius: 4px;
+  color: #333;
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.signin .content .form .inputBox i {
+  position: absolute;
+  left: 0;
+  padding: 15px 10px;
+  font-style: normal;
+  color: #aaa;
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+.content .form .inputBox input:focus ~ i,
+.content .form .inputBox input:valid ~ i {
+  transform: translateY(-7.5px);
+  font-size: 0.8em;
+  color: #25A3B8;
+}
+
+.content .form .links {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.content .form .links a {
+  color: #25A3B8;
+  text-decoration: none;
+}
+
+.content .form .links a:nth-child(2) {
+  color: #25A3B8;
+  font-weight: 600;
+}
+
+.content .form .button-box button {
+  position: relative;
+  width: 100%;
+  background: #f2f2f2;
+  border: none;
+  padding: 10px;
+  background: #25A3B8;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.35em;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+
+.button-box button:active {
+  opacity: 0.6;
+}
+
+.error-text {
+  position: absolute;
+  left: 0;
+  bottom: -35%;
+  color: #DC3545;
+  font-size: 13px;
+} 
+
+.signin .content .form .inputBox .error-color{
+  color: #DC3545;
+}
