@@ -30,9 +30,6 @@ export function UserView({ List }) {
                     <b>Email:</b>
                     <p>{email}</p>
                 </div>
-                <button className='close-button'>
-                    <FontAwesomeIcon icon={faTimesCircle} />
-                </button>
             </div>
         </div>
     );

@@ -5,27 +5,36 @@ import { UserView } from '../component/UserView';
 import PropTypes from 'prop-types';
 import { Input } from '../component/input';
 import { Link, Route, Routes } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
+import { addData, deleteData, getData } from '../store/data/data.action'
 
 
-export function UserData({ List, SetList, onDelete }) {
+export function UserData({ List, onDelete }) {
     const [updateState, setUpdateState] = useState(-1)
     const [list, setList] = useState(List);
+
+    const dispatch = useDispatch();
+
+    const { data } = useSelector( store => ({
+        data: store.dataReducer.data
+    }) )
 
     const handleUpdate = (index) => {
         setUpdateState(index);
     };
+
 return (
     <>
         <Input AddData={(name, lastName, email) => {
-          SetList([
-              ...List,
+          dispatch(addData([
+              ...data,
               {
                   name: name,
                   lastName: lastName,
                   email: email,
                   id: Math.random()
               },
-          ]);
+          ]));
       }} />
         <div className='userData-cont'>
             <table className='table'>

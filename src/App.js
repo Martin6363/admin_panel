@@ -4,19 +4,24 @@ import { UserData } from './pages/userData';
 import { TailSpin } from 'react-loader-spinner'
 import { LoginInput } from './pages/loginInput';
 import { Route, Routes } from 'react-router';
-import { dataList } from './component/dataList'; 
 import { UserView } from './component/UserView';
 import { NavigationHeader } from './pages/navigationHeader';
+import { useSelector, useDispatch } from 'react-redux';
+import { addData, deleteData, getData } from './store/data/data.action'
 
 
 function App() {
-  const [list, setList] = useState(dataList);
   const [isLoading, setIsLoading] = useState(true);
+
+  const dispatch = useDispatch();
+  const { data } = useSelector( store => ({
+    data: store.dataReducer.data
+  }) )
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 400);
   }, [])
 
   if (isLoading) {
@@ -44,14 +49,13 @@ function App() {
           <Route path="/" element={<LoginInput/>}/>
           <Route path='/userData' element={
             <UserData 
-              List={list}
-              SetList={setList}
+              List={data}
               onDelete={(userData) => {
-                setList(list.filter((elem) => elem.id !== userData.id));
+                dispatch(deleteData(data.filter((elem) => elem.id !== userData.id)));
               }}
             />
           }/>
-          <Route path='/UserView/:id/' element={<UserView List={list}/>}/>
+          <Route path='/UserView/:id/' element={<UserView List={data}/>}/>
           <Route path='/navigationHeader' element={<NavigationHeader/>}/>       
           <Route path='/loginInput' element={<LoginInput/>}/> 
           <Route path='*' element={<h1>404</h1>}/>
