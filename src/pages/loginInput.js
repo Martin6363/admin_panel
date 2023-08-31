@@ -14,7 +14,7 @@ export function LoginInput() {
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
-        if (data.username === 'Tco' && data.password === '123') {
+        if (data.username === 'Admin' && data.password === 'Admin') {
             console.log(data);
             navigate('/userData');
             reset();

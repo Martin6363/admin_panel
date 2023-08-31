@@ -7,7 +7,7 @@ import { Route, Routes } from 'react-router';
 import { UserView } from './component/UserView';
 import { NavigationHeader } from './pages/navigationHeader';
 import { useSelector, useDispatch } from 'react-redux';
-import { addData, deleteData, getData } from './store/data/data.action'
+import { deleteData } from './store/data/data.action'
 
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 400);
+    }, 3000);
   }, [])
 
   if (isLoading) {

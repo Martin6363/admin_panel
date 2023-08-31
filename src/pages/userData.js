@@ -4,30 +4,24 @@ import '../assets/styles/table.scss'
 import { UserView } from '../component/UserView';
 import PropTypes from 'prop-types';
 import { Input } from '../component/input';
-import { Link, Route, Routes } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
-import { addData, deleteData, getData } from '../store/data/data.action'
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { addData } from '../store/data/data.action'
 
 
 export function UserData({ List, onDelete }) {
     const [updateState, setUpdateState] = useState(-1)
     const [list, setList] = useState(List);
-
     const dispatch = useDispatch();
-
-    const { data } = useSelector( store => ({
-        data: store.dataReducer.data
-    }) )
-
-    const handleUpdate = (index) => {
-        setUpdateState(index);
-    };
+    function handleEdit (id) {
+        setUpdateState(id)
+    }
 
 return (
     <>
         <Input AddData={(name, lastName, email) => {
           dispatch(addData([
-              ...data,
+              ...List,
               {
                   name: name,
                   lastName: lastName,
@@ -48,13 +42,24 @@ return (
                 </thead>
                 <tbody className='tbody'>
                     {
-                        List.map((elem, i) => (
+                        List.map((elem) => (
+                            updateState === elem.id 
+                            ?
+                            <React.Fragment key={elem.id}>
+                                <EditInput 
+                                    current={elem} 
+                                    setList={List} 
+                                    setEditingIndex={setList} 
+                                    saveEdit={() => setUpdateState(-1)} 
+                                />
+                            </React.Fragment>
+                            :
                             <tr key={elem.id} className='tbody-tr'>
                                 <td>{elem.name}</td>
                                 <td>{elem.lastName}</td>
                                 <td>{elem.email}</td>
                                 <td className='table-button'>
-                                    <button className='edit-btn' onClick={() => handleUpdate(i)}>
+                                    <button className='edit-btn' onClick={() => handleEdit(elem.id)}>
                                         Update
                                     </button>
                                     <button className='delete-btn' onClick={() => onDelete(elem)}>
@@ -69,11 +74,6 @@ return (
                     }
                 </tbody>
             </table>
-            {
-                updateState !== -1 && (
-                    <EditInput current={list[updateState]} setList={setList} setEditingIndex={setUpdateState} />
-                )
-            }
         <div className='View-container'>
             {
                 <UserView List={list}/>
